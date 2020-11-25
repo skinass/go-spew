@@ -73,6 +73,8 @@ type ConfigState struct {
 	// to reflect this field, which would now be nil everywhere.
 	DisableNilValues bool
 
+	DisableZeroValues bool
+
 	// DisablePointerAddresses specifies whether to disable the printing of
 	// pointer addresses. This is useful when diffing data structures in tests.
 	DisablePointerAddresses bool

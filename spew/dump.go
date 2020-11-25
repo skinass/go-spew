@@ -315,6 +315,10 @@ func (d *dumpState) dump(v reflect.Value) {
 		}
 	}
 
+	if d.cs.DisableZeroValues && v.IsZero() {
+		return
+	}
+
 	switch kind {
 	case reflect.Invalid:
 		// Do nothing.  We should never get here since invalid has already
@@ -468,6 +472,9 @@ func (d *dumpState) writeDelimiter(hasMoreElements bool) {
 
 // filterValue returns true if a value should be dumped.
 func (d *dumpState) filterValue(value reflect.Value) bool {
+	if d.cs.DisableZeroValues && value.IsZero() {
+		return false
+	}
 	if !d.cs.DisableNilValues {
 		return true
 	}

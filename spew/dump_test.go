@@ -67,7 +67,7 @@ import (
 	"testing"
 	"unsafe"
 
-	"github.com/davecgh/go-spew/spew"
+	"github.com/skinass/go-spew/spew"
 )
 
 // dumpTest is used to describe a test to be performed against the Dump method.
@@ -1039,4 +1039,24 @@ func TestDumpSortedKeys(t *testing.T) {
 		t.Errorf("Sorted keys mismatch:\n  %v %v", s, expected)
 	}
 
+}
+
+func TestZeroValues(t *testing.T) {
+	cfg := spew.ConfigState{
+		SortKeys:          true,
+		DisableZeroValues: true,
+	}
+	value := struct {
+		A      int
+		B      int
+		Tmp    []string
+		Blabla map[string]string
+	}{A: 1}
+	s := cfg.Sdump(value)
+	expected := "(struct { A int; B int; Tmp []string; Blabla map[string]string }) {\n" +
+		"A: (int) 1\n" +
+		"}\n"
+	if s != expected {
+		t.Errorf("Zero keys mismatch:\n  %v %v", s, expected)
+	}
 }
